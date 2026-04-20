@@ -229,7 +229,24 @@
     .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan); color: white; padding: 14px 28px; border-radius: var(--r-sm); font-size: 15px; font-weight: 800; text-decoration: none; transition: all 0.2s; }
     .cta-btn:hover { background: var(--cyan-dark); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,180,216,0.4); }
 
-    /* ── FOOTER ─── */
+    /* ══ Print-only / Screen-only ══ */
+    .print-only { display: none; }
+    .screen-only { display: block; }
+
+    /* ══ Bloques estáticos para PDF ══ */
+    .pf-block { margin-bottom: 14px; padding: 12px 14px; background: white; border-radius: 8px; border: 1px solid var(--border); border-left: 3px solid var(--cyan); }
+    .pf-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .pf-icon { font-size: 16px; }
+    .pf-sub { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan-dark); background: var(--cyan-pale); display: inline-block; padding: 2px 8px; border-radius: 10px; margin: 6px 0 6px; }
+    .pf-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
+    .pf-list li { font-size: 11px; color: #4A5568; line-height: 1.5; padding-left: 14px; position: relative; }
+    .pf-list li::before { content: '→'; position: absolute; left: 0; color: var(--cyan-dark); font-weight: 700; font-size: 10px; }
+    .pf-list li strong { color: var(--navy); }
+
+    /* ══ Acordeones abiertos durante impresión ══ */
+    body.is-printing .acc-body { display: block; visibility: visible; height: auto; overflow: visible; }
+    body.is-printing .acc-item { overflow: visible; height: auto; }
+    body.is-printing .acc-chevron { display: none; }
     .proposal-footer { background: var(--navy-dark); color: rgba(255,255,255,0.4); text-align: center; padding: 28px 24px; font-size: 12px; }
     .footer-brand { display: flex; align-items: center; justify-content: center; gap: 8px; color: white; font-size: 18px; font-weight: 900; margin-bottom: 8px; }
     .footer-mark { width: 26px; height: 26px; background: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -273,19 +290,29 @@
     #pw-err { color: #e53e3e; font-size: 13px; margin-top: 10px; display: none; font-weight: 600; }
     #pw-https-note { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.5; }
     @media print {
-      /* ── UI oculta ── */
+      /* ══ UI: ocultar elementos de navegación ══ */
       .proposal-nav, .valid-banner, .btn-pdf, #pw-overlay { display: none !important; }
       .blueprint-btn { display: none !important; }
       #t-why { display: none !important; }
 
-      /* ── Mostrar todas las demás secciones ── */
+      /* ══ Swap acordeón ↔ versión estática en print ══ */
+      .screen-only { display: none !important; }
+      .print-only { display: block !important; }
+
+      /* ══ Mostrar todas las secciones restantes (incluyendo t-scope) ══ */
       .section-tab { display: block !important; }
+      #t-scope { display: block !important; }
 
-      /* ── Colores y base ── */
+      /* ══ Acordeones: forzar cuerpo visible ══ */
+      .acc-item { overflow: visible !important; height: auto !important; }
+      .acc-body { display: block !important; visibility: visible !important; height: auto !important; overflow: visible !important; }
+      .acc-chevron { display: none !important; }
+
+      /* ══ Base ══ */
       body { font-size: 11px !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .proposal-content { padding: 24px 16px !important; max-width: 100% !important; }
+      .proposal-content { padding: 20px 20px !important; max-width: 100% !important; }
 
-      /* ── HOJA 1: Portada compacta (40% de alto) + "IA para tu comercio exterior" ── */
+      /* ══ PORTADA: compacta sin imagen ══ */
       .proposal-cover {
         background-image: none !important;
         background: var(--navy) !important;
@@ -294,76 +321,82 @@
         padding: 0 !important;
       }
       .cover-overlay { display: none !important; }
-      .cover-content {
-        min-height: auto !important;
-        padding: 28px 40px 24px !important;
-      }
-      /* Reducir tamaños de texto en portada */
-      .cover-company { font-size: 36px !important; margin-bottom: 8px !important; }
-      .cover-subtitle { font-size: 14px !important; }
-      .cover-meta { gap: 14px !important; margin-top: 14px !important; }
+      .cover-content { min-height: auto !important; padding: 28px 40px 24px !important; }
+      .cover-company { font-size: 34px !important; margin-bottom: 8px !important; }
+      .cover-subtitle { font-size: 13px !important; }
+      .cover-meta { gap: 12px !important; margin-top: 12px !important; }
       .cover-meta-item { font-size: 11px !important; }
       .cover-tag { margin-bottom: 10px !important; padding: 4px 12px !important; }
-      .cover-bottom { padding-top: 16px !important; }
+      .cover-bottom { padding-top: 14px !important; }
 
-      /* "Sobre Birdie" (IA para tu comercio exterior) en la misma hoja 1 que la portada */
+      /* ══ Sobre Birdie: en misma hoja que portada, sin imagen ══ */
       #t-about { page-break-before: avoid !important; }
-
-      /* Ocultar imagen del puerto en la sección sobre Birdie */
       .about-img { display: none !important; }
+      .stats-row { gap: 10px !important; margin: 16px 0 !important; }
+      .stat-card { padding: 14px 10px !important; }
+      .stat-num { font-size: 28px !important; }
+      .why-item { padding: 10px 14px !important; }
+      .why-title { font-size: 12px !important; }
+      .why-desc { font-size: 11px !important; }
+      #t-about .sec-title { font-size: 22px !important; margin-bottom: 10px !important; }
+      #t-about .sec-body { font-size: 11px !important; margin-bottom: 16px !important; }
+      #t-about .divider { margin: 16px 0 !important; }
+      #t-about h2 { font-size: 16px !important; margin-bottom: 10px !important; }
 
-      /* ── HOJA 3: Título de Plataforma + Gestión Operativa en una sola hoja ── */
+      /* ══ Plataforma: nueva hoja, título + acordeones compactos ══ */
       #t-features { page-break-before: always !important; }
-      #t-features .sec-tag { margin-bottom: 6px !important; }
       #t-features .sec-title { font-size: 20px !important; margin-bottom: 6px !important; }
       #t-features .sec-body { font-size: 10px !important; line-height: 1.5 !important; margin-bottom: 10px !important; }
       #t-features .accordion { margin: 8px 0 !important; gap: 5px !important; }
-      #t-features .acc-header { padding: 8px 12px !important; }
-      #t-features .acc-icon-wrap { width: 28px !important; height: 28px !important; font-size: 13px !important; }
+      #t-features .acc-header { padding: 7px 12px !important; }
+      #t-features .acc-icon-wrap { width: 26px !important; height: 26px !important; font-size: 12px !important; }
       #t-features .acc-title { font-size: 11px !important; }
-      #t-features .acc-body { padding: 0 12px 10px 50px !important; }
-      #t-features .feat-list { gap: 5px !important; }
-      #t-features .feat-list li { font-size: 9.5px !important; line-height: 1.45 !important; }
-      #t-features .acc-subsection { margin-bottom: 8px !important; }
-      #t-features .acc-sub-label { font-size: 9px !important; padding: 2px 8px !important; margin-bottom: 6px !important; }
-      #t-features [style*="font-size:12px;font-weight:700"] { font-size: 9px !important; margin-bottom: 4px !important; }
-      #t-features p[style*="cyan-pale"] { font-size: 9.5px !important; padding: 7px 10px !important; margin-bottom: 8px !important; }
-      /* Gestión Operativa no se corta */
+      #t-features .acc-body { display: block !important; visibility: visible !important; height: auto !important; overflow: visible !important; padding: 0 10px 8px 46px !important; }
+      #t-features .feat-list { gap: 4px !important; }
+      #t-features .feat-list li { font-size: 9px !important; line-height: 1.4 !important; }
+      #t-features .acc-subsection { margin-bottom: 7px !important; }
+      #t-features .acc-sub-label { font-size: 9px !important; padding: 2px 7px !important; margin-bottom: 5px !important; }
+      #t-features p[style*="cyan-pale"] { font-size: 9px !important; padding: 6px 10px !important; margin-bottom: 7px !important; }
+      /* Subsección Laredo con sus 3 bloques: no cortar */
       #t-features .acc-item:first-child { page-break-inside: avoid !important; }
+      /* Cada accordion restante: títulos al inicio de página si no caben */
+      #t-features .acc-item { page-break-before: auto; page-break-inside: avoid !important; }
+      #t-features .acc-header { page-break-after: avoid !important; }
 
-      /* ── HOJA 4-5: Propuesta + tabla en misma hoja ── */
+      /* ══ Propuesta: nueva hoja, título + tabla juntos ══ */
       #t-proposal { page-break-before: always !important; }
-      #t-proposal .sec-title,
-      #t-proposal .sec-body,
-      #t-proposal h3,
-      .breakdown-table { page-break-inside: avoid !important; }
-      /* Evitar que el título y la tabla se separen */
+      #t-proposal .sec-title { page-break-after: avoid !important; }
       #t-proposal h3 { page-break-after: avoid !important; }
-
-      /* Tabla de inversión ajustada a la hoja */
-      .breakdown-table {
-        width: 100% !important;
-        font-size: 10px !important;
-        table-layout: fixed !important;
-      }
-      .breakdown-table th, .breakdown-table td {
-        padding: 6px 8px !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-      }
+      .breakdown-table { width: 100% !important; font-size: 10px !important; table-layout: fixed !important; page-break-inside: avoid !important; }
+      .breakdown-table th, .breakdown-table td { padding: 5px 7px !important; word-wrap: break-word !important; overflow-wrap: break-word !important; }
       .breakdown-table th:first-child, .breakdown-table td:first-child { width: 20% !important; }
-      .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 58% !important; }
-      .breakdown-table th:last-child, .breakdown-table td:last-child { width: 22% !important; white-space: normal !important; }
+      .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 57% !important; }
+      .breakdown-table th:last-child, .breakdown-table td:last-child { width: 23% !important; white-space: normal !important; }
       .td-concept strong { font-size: 10px !important; }
       .concept-tag { display: none !important; }
       .td-desc { font-size: 10px !important; }
+      .includes-box { page-break-inside: avoid !important; }
+      .includes-grid { grid-template-columns: 1fr 1fr !important; }
 
-      /* ── HOJA 6: Condiciones Comerciales forzado al inicio ── */
+      /* ══ Condiciones: nueva hoja ══ */
       #t-terms { page-break-before: always !important; }
 
-      /* Evitar cortes internos */
-      .terms-block, .includes-box, .stat-card { page-break-inside: avoid !important; }
-      .acc-item { page-break-inside: avoid !important; }
+      /* ══ Evolución de Alcance: nueva hoja ══ */
+      #t-scope { page-break-before: always !important; }
+      .comp-table { font-size: 10px !important; }
+      .comp-table td, .comp-table th { padding: 5px 7px !important; font-size: 10px !important; }
+      .kpi-row { gap: 8px !important; margin-bottom: 14px !important; }
+      .kpi { padding: 10px 12px !important; }
+      .kpi-val { font-size: 18px !important; }
+      .terms-block { page-break-inside: avoid !important; page-break-before: auto; }
+      .terms-block h3 { page-break-after: avoid !important; }
+      .payment-timeline { page-break-inside: avoid !important; }
+      .cta-block { page-break-inside: avoid !important; }
+
+      /* ══ General: sin cortes huérfanos ══ */
+      h1, h2, h3, h4 { page-break-after: avoid !important; }
+      .stat-card { page-break-inside: avoid !important; }
+      img { max-width: 100% !important; page-break-inside: avoid !important; }
     }
     @media (max-width: 640px) {
       .cover-content { padding: 24px 24px; }
@@ -443,6 +476,7 @@
       <button class="nav-tab" onclick="showTab('t-features', this)">Plataforma</button>
       <button class="nav-tab" onclick="showTab('t-why', this)">¿Por qué Birdie?</button>
       <button class="nav-tab" onclick="showTab('t-proposal', this)">Propuesta Comercial</button>
+      <button class="nav-tab" onclick="showTab('t-scope', this)">Evolución de Alcance</button>
       <button class="nav-tab" onclick="showTab('t-terms', this)">Condiciones</button>
     </div>
   </nav>
@@ -492,7 +526,8 @@
       <h1 class="sec-title">Todo lo que necesitas para gestionar tus operaciones</h1>
       <p class="sec-body">Birdie integra en una sola plataforma todas las herramientas que tu equipo necesita para operar con eficiencia, visibilidad y control total, tanto en puertos marítimos como en la operación de Laredo.</p>
 
-      <div class="accordion">
+      <!-- VERSION INTERACTIVA (solo pantalla) -->
+      <div class="accordion screen-only">
 
         <!-- 1. Gestión Operativa -->
         <div class="acc-item open">
@@ -502,8 +537,6 @@
             <span class="acc-chevron">▾</span>
           </button>
           <div class="acc-body">
-
-            <!-- Subsección: Puertos -->
             <div class="acc-subsection">
               <div class="acc-sub-label">⚓ Puertos</div>
               <ul class="feat-list">
@@ -513,11 +546,8 @@
                 <li><strong>Bitácora colaborativa multiárea</strong> — Registro de operaciones compartido entre compras, finanzas, almacén y demás áreas.</li>
               </ul>
             </div>
-
-            <!-- Subsección: Laredo -->
             <div class="acc-subsection">
               <div class="acc-sub-label">🌉 Laredo</div>
-
               <div style="margin-bottom:14px">
                 <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Flujo operativo end-to-end (core del sistema)</div>
                 <ul class="feat-list">
@@ -525,14 +555,12 @@
                   <li><strong>Tablero en tiempo real</strong> — Estatus por operación y control por roles, con visibilidad transversal para todos los equipos involucrados.</li>
                 </ul>
               </div>
-
               <div style="margin-bottom:14px">
                 <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Automatización y capacidades inteligentes</div>
                 <ul class="feat-list">
                   <li><strong>OCR + IA para extracción y validación de documentos</strong> — Captura automática de datos desde facturas, manifiestos y documentos de cruce, con validación cruzada en tiempo real.</li>
                 </ul>
               </div>
-
               <div>
                 <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Control operativo y trazabilidad</div>
                 <ul class="feat-list">
@@ -541,7 +569,6 @@
                 </ul>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -616,6 +643,59 @@
         </div>
 
       </div>
+
+      <!-- VERSION ESTÁTICA SOLO PARA IMPRESIÓN -->
+      <div class="print-only" style="display:none">
+        <div class="pf-block">
+          <div class="pf-header"><span class="pf-icon">⚙️</span><strong>Sistema de Gestión Operativa</strong></div>
+          <div class="pf-sub">⚓ Puertos</div>
+          <ul class="pf-list">
+            <li><strong>Personalización de columnas</strong> — Configura las columnas relevantes para replicar la visibilidad actual de tu operación.</li>
+            <li><strong>Trazabilidad aérea y marítima (multinaviera)</strong> — Automatización desde POD, POL, ETD, ETA, fecha de descarga y retorno de vacío.</li>
+            <li><strong>Integración directa con SOIA</strong> — Visibilidad en despacho aduanal, fechas de pago de pedimento, importe y fecha de desaduanamiento.</li>
+            <li><strong>Bitácora colaborativa multiárea</strong> — Registro de operaciones compartido entre compras, finanzas, almacén y demás áreas.</li>
+          </ul>
+          <div class="pf-sub">🌉 Laredo — Flujo operativo end-to-end</div>
+          <ul class="pf-list">
+            <li><strong>Gestión completa de flujo</strong> — IN → TUD → SAP → TA → TW → TOK → INV → OUT → Cierre en una sola cadena operativa sin fricciones.</li>
+            <li><strong>Tablero en tiempo real</strong> — Estatus por operación y control por roles, con visibilidad transversal para todos los equipos involucrados.</li>
+            <li><strong>OCR + IA</strong> — Captura automática de datos desde facturas, manifiestos y documentos de cruce, con validación cruzada en tiempo real.</li>
+            <li><strong>Control de accesos con QR</strong> — Gestión de entrada y salida de choferes y cajas con trazabilidad completa por evento.</li>
+            <li><strong>Monitoreo de dock time, calidad, incidencias y desempeño</strong> — Métricas operativas en tiempo real con histórico por operador, turno y cliente.</li>
+          </ul>
+        </div>
+        <div class="pf-block">
+          <div class="pf-header"><span class="pf-icon">📁</span><strong>Control Documental</strong></div>
+          <ul class="pf-list">
+            <li>Toda la documentación de comercio exterior (puertos + Laredo) consolidada en un solo expediente digital, alineada a la Ley Aduanera aplicable.</li>
+            <li><strong>Gestión segura de documentos</strong> — Factura comercial, packing list, BL, certificados de origen y más.</li>
+            <li><strong>Validación automática con IA</strong> — Detección de errores antes del cruce o despacho.</li>
+            <li><strong>Retención documental de 5 años</strong> — Acceso inmediato para auditorías del SAT, ANAM o autoridades aduaneras.</li>
+          </ul>
+        </div>
+        <div class="pf-block">
+          <div class="pf-header"><span class="pf-icon">🔔</span><strong>Alertas Inteligentes</strong></div>
+          <ul class="pf-list">
+            <li><strong>Notificaciones automáticas por correo</strong> — Cambios de ETA, documentos faltantes, alertas de Cargo Ready Date (CRD).</li>
+            <li><strong>Integración con WhatsApp</strong> — Consulta estatus de operaciones directamente desde WhatsApp.</li>
+          </ul>
+        </div>
+        <div class="pf-block">
+          <div class="pf-header"><span class="pf-icon">🤝</span><strong>Colaboración con Diferentes Áreas</strong></div>
+          <ul class="pf-list">
+            <li><strong>Vistas específicas por área</strong> — Compras, finanzas, almacén y más.</li>
+            <li><strong>Implementación detallada por equipo</strong> — Configuración y capacitación según necesidades operativas.</li>
+          </ul>
+        </div>
+        <div class="pf-block">
+          <div class="pf-header"><span class="pf-icon">📊</span><strong>Tableros de KPIs y Analítica</strong></div>
+          <ul class="pf-list">
+            <li><strong>Indicadores en tiempo real</strong> — Tiempos de despacho, eficiencia logística, costos acumulados.</li>
+            <li><strong>Tableros personalizados</strong> — Desarrollados a partir del tercer mes de colaboración.</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
     <!-- ─── ¿POR QUÉ BIRDIE? ──────────────── -->
@@ -855,6 +935,282 @@
 
     </div>
 
+    <!-- ─── EVOLUCIÓN DE ALCANCE ─────────── -->
+    <div id="t-scope" class="section-tab">
+      <div class="sec-tag">ALCANCE</div>
+      <h1 class="sec-title">Evolución de Alcance</h1>
+      <p class="sec-body">Comparativo entre la propuesta original (agosto 2025) y la propuesta actualizada (abril 2026), detallando los módulos nuevos, mejorados e incluidos que justifican el incremento de inversión.</p>
+
+      <style>
+        .gap-wrap { padding: 0.5rem 0 2rem; }
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 2rem; }
+        .kpi { background: white; border-radius: var(--r); border: 1px solid var(--border); padding: 14px 16px; box-shadow: var(--shadow); }
+        .kpi-label { font-size: 12px; color: var(--text-muted); margin: 0 0 4px; }
+        .kpi-val { font-size: 22px; font-weight: 800; color: var(--text); margin: 0; }
+        .kpi-sub { font-size: 11px; color: #94a3b8; margin: 2px 0 0; }
+        .gap-section-title { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px; }
+        .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 2rem; table-layout: fixed; }
+        .comp-table th { text-align: left; padding: 8px 10px; font-size: 11px; font-weight: 700; color: var(--text-muted); border-bottom: 1.5px solid var(--border); background: var(--bg); }
+        .comp-table td { padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); font-size: 13px; }
+        .comp-table tr:last-child td { border-bottom: none; }
+        .comp-table th:nth-child(1) { width: 18%; }
+        .comp-table th:nth-child(2) { width: 10%; }
+        .comp-table th:nth-child(3) { width: 23%; }
+        .comp-table th:nth-child(4) { width: 28%; }
+        .comp-table th:nth-child(5) { width: 11%; }
+        .comp-table th:nth-child(6) { width: 10%; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .b-new { background: #e6f1fb; color: #185fa5; }
+        .b-imp { background: #eaf3de; color: #3b6d11; }
+        .b-orig { background: #f1efe8; color: #5f5e5a; }
+        .rel-high { color: #3b6d11; font-weight: 600; }
+        .rel-med { color: #854f0b; font-weight: 600; }
+        .rel-low { color: #94a3b8; }
+        .val-bar-wrap { display: flex; align-items: center; gap: 6px; }
+        .val-bar { height: 6px; border-radius: 3px; background: var(--cyan); }
+        .val-num { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+        .gap-divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+        .price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .price-label { font-size: 12px; color: var(--text-muted); width: 220px; flex-shrink: 0; }
+        .price-bar-bg { flex: 1; height: 8px; background: var(--border); border-radius: 4px; }
+        .price-bar-fill { height: 8px; border-radius: 4px; }
+        .price-val { font-size: 12px; color: var(--text); font-weight: 600; width: 56px; text-align: right; flex-shrink: 0; }
+        .gap-note { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+        .scope-tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .scope-tag { font-size: 12px; padding: 3px 10px; border-radius: 10px; border: 1px solid; }
+        .row-new td:first-child { border-left: 2px solid var(--cyan); }
+        .row-imp td:first-child { border-left: 2px solid #79ddae; }
+        .comp-table tbody tr:hover td { background: #fafcff; }
+      </style>
+
+      <div class="gap-wrap">
+
+        <div class="kpi-row">
+          <div class="kpi">
+            <p class="kpi-label">Propuesta original</p>
+            <p class="kpi-val">$88,000</p>
+            <p class="kpi-sub">USD · agosto 2025</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-label">Propuesta actualizada</p>
+            <p class="kpi-val" style="color:var(--navy)">$124,830</p>
+            <p class="kpi-sub">USD · Fase 1 + 2 sin IVA</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-label">Incremento neto</p>
+            <p class="kpi-val" style="color:#185fa5;">+$36,830</p>
+            <p class="kpi-sub">+42% vs versión original</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-label">Módulos nuevos o mejorados</p>
+            <p class="kpi-val">9</p>
+            <p class="kpi-sub">vs 7 pasos originales</p>
+          </div>
+        </div>
+
+        <div class="scope-tag-row">
+          <span class="scope-tag" style="background:#e6f1fb; border-color:#b5d4f4; color:#185fa5;">★ Nueva funcionalidad</span>
+          <span class="scope-tag" style="background:#eaf3de; border-color:#c0dd97; color:#3b6d11;">Mejorado significativamente</span>
+          <span class="scope-tag" style="background:#f1efe8; border-color:#d3d1c7; color:#5f5e5a;">Original (sin cambio)</span>
+        </div>
+
+        <p class="gap-section-title">tabla comparativa por módulo</p>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Módulo / Paso</th>
+              <th>Status</th>
+              <th>V1 — agosto 2025</th>
+              <th>V2 — abril 2026 (gap)</th>
+              <th>Relevancia</th>
+              <th>Valor est.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-new">
+              <td><strong>Paso Previo</strong><br><span style="font-size:11px;color:var(--text-muted)">SAP sync automático</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">No existía. SAP se validaba manualmente.</td>
+              <td>Sincronización diaria automática de OC activas contra SAP antes de iniciar operación. Fuente de verdad para todo el flujo. Fallback auditado.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:45px"></div><span class="val-num">~$4K</span></div></td>
+            </tr>
+            <tr class="row-imp">
+              <td><strong>Paso 1</strong><br><span style="font-size:11px;color:var(--text-muted)">Pre-registro + ventanilla</span></td>
+              <td><span class="badge b-imp">Mejorado</span></td>
+              <td>Formulario básico via WhatsApp/SMS. Captura manual en ventanilla.</td>
+              <td>Flujos explícitos Caso 1 (con pre-reg) y Caso 2 (sin). Trigger automático de validación SAP al aprobar. Número de camión consecutivo para visibilidad anticipada.</td>
+              <td class="rel-med">Media</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:20px"></div><span class="val-num">~$2K</span></div></td>
+            </tr>
+            <tr class="row-new">
+              <td><strong>Paso 2</strong><br><span style="font-size:11px;color:var(--text-muted)">Validación SAP automática</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">Solo sugerido en nota IT. No implementado.</td>
+              <td>Extracción de PO + cruce automático contra SAP sin intervención manual. Log de excepciones con timestamp, usuario y motivo de override. Auditoría completa.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:35px"></div><span class="val-num">~$4K</span></div></td>
+            </tr>
+            <tr>
+              <td><strong>Paso 3</strong><br><span style="font-size:11px;color:var(--text-muted)">Validación Side-to-Side</span></td>
+              <td><span class="badge b-orig">Original</span></td>
+              <td>Vista doc vs IA, edición directa, copia 1 clic.</td>
+              <td>Sin cambio funcional relevante.</td>
+              <td class="rel-low">Base</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:8px"></div><span class="val-num">incluido</span></div></td>
+            </tr>
+            <tr class="row-new">
+              <td><strong>Paso 4</strong><br><span style="font-size:11px;color:var(--text-muted)">Validación USDA vía RPA</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">Solo mencionado como futura automatización. No cotizado.</td>
+              <td>RPA completo sobre portal USDA: navegación automática, llenado de formularios, detección de errores, log de todas las consultas. PDF de carga automático.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:65px"></div><span class="val-num">~$7K</span></div></td>
+            </tr>
+            <tr class="row-new">
+              <td><strong>Paso 5</strong><br><span style="font-size:11px;color:var(--text-muted)">Forecast y activos</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">No existía. Decisiones de trasbordo se tomaban manualmente.</td>
+              <td>Módulo de forecast de inventario. Integración lógica automática de trasbordo, validación de capacidad vs carga.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:58px"></div><span class="val-num">~$6K</span></div></td>
+            </tr>
+            <tr>
+              <td><strong>Paso 6</strong><br><span style="font-size:11px;color:var(--text-muted)">TA Asignación andén</span></td>
+              <td><span class="badge b-orig">Original</span></td>
+              <td>Asignación de andén, designación y placas. QR contenedor MX.</td>
+              <td>Sin cambio relevante.</td>
+              <td class="rel-low">Base</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:8px"></div><span class="val-num">incluido</span></div></td>
+            </tr>
+            <tr class="row-imp">
+              <td><strong>Paso 7</strong><br><span style="font-size:11px;color:var(--text-muted)">Activos logísticos / cajas</span></td>
+              <td><span class="badge b-imp">Mejorado</span></td>
+              <td>Inventario básico de cajas mencionado en TA.</td>
+              <td>Módulo propio: estados (Libre/Ocupada/Reservada/En tránsito), validación capacidad vs carga, cobertura de destino, campo de placas, integración con Forecast para decisión de trasbordo automática.</td>
+              <td class="rel-med">Media</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:30px"></div><span class="val-num">~$4K</span></div></td>
+            </tr>
+            <tr class="row-new">
+              <td><strong>Paso 8</strong><br><span style="font-size:11px;color:var(--text-muted)">Seguridad y control de patio</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">No existía. Guardia tomaba decisiones discrecionales.</td>
+              <td>QR de entrada/salida verificado por sistema. Rondas de inventario con app móvil. Bloqueo automático de salidas no autorizadas. Log de intentos interceptados. Notificación automática a agencia aduanal al registrar entrada.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:55px"></div><span class="val-num">~$6K</span></div></td>
+            </tr>
+            <tr class="row-imp">
+              <td><strong>Paso 9</strong><br><span style="font-size:11px;color:var(--text-muted)">TW Previo + Dock Time</span></td>
+              <td><span class="badge b-imp">Mejorado</span></td>
+              <td>Checklist, fotos, calidad, cierre de previo. 4 pasos básicos.</td>
+              <td>Mismo flujo + cronómetro automático de dock time por revisor desde escaneo QR. Métricas comparativas entre revisores. Alertas de saturación. PDF firmado digitalmente con timestamp.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:25px"></div><span class="val-num">~$3K</span></div></td>
+            </tr>
+            <tr>
+              <td><strong>Paso 10</strong><br><span style="font-size:11px;color:var(--text-muted)">TOK Validación final</span></td>
+              <td><span class="badge b-orig">Original</span></td>
+              <td>Revisión integral, autoriza salida.</td>
+              <td>Agrega retorno al paso específico con comentarios visibles en expediente.</td>
+              <td class="rel-low">Base</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:8px"></div><span class="val-num">incluido</span></div></td>
+            </tr>
+            <tr class="row-imp">
+              <td><strong>Paso 11</strong><br><span style="font-size:11px;color:var(--text-muted)">INV Facturación sin SAP</span></td>
+              <td><span class="badge b-imp">Mejorado</span></td>
+              <td>Urner Barry + fórmula + envío payload a SAP.</td>
+              <td>Edición de factura directamente desde Birdie sin acceso a SAP (4 transacciones con acceso restringido). Sistema aplica cambios en SAP en background.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:28px"></div><span class="val-num">~$3K</span></div></td>
+            </tr>
+            <tr>
+              <td><strong>Paso 12</strong><br><span style="font-size:11px;color:var(--text-muted)">OUT Salida unidad MX</span></td>
+              <td><span class="badge b-orig">Original</span></td>
+              <td>Notificación a agencia aduanal, caja liberada.</td>
+              <td>Integrado con Paso 8 (QR caseta). Datos de salida enviados automáticamente.</td>
+              <td class="rel-low">Base</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:8px"></div><span class="val-num">incluido</span></div></td>
+            </tr>
+            <tr class="row-new">
+              <td><strong>Paso 13</strong><br><span style="font-size:11px;color:var(--text-muted)">Cierre de operación</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">No existía. Sin cierre formal del expediente.</td>
+              <td>Sellado formal del expediente completo (docs, OCR, validaciones, previo, factura, salida). Métricas de ciclo total. Notificación final a agencia aduanal. Archivado automático en Active Tiering 5 años.</td>
+              <td class="rel-med">Media</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:20px"></div><span class="val-num">~$2K</span></div></td>
+            </tr>
+            <tr class="row-imp">
+              <td><strong>Tablero operativo</strong><br><span style="font-size:11px;color:var(--text-muted)">Vistas por rol</span></td>
+              <td><span class="badge b-imp">Mejorado</span></td>
+              <td>Un dashboard general con cuadros por paso y semáforo de color.</td>
+              <td>5 vistas diferenciadas por rol: management, guardia, tráfico, facturación, TIF.</td>
+              <td class="rel-med">Media</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:18px"></div><span class="val-num">~$2K</span></div></td>
+            </tr>
+            <tr class="row-new">
+              <td><strong>Hardware</strong><br><span style="font-size:11px;color:var(--text-muted)">Gestionado por Birdie</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">No incluido. Sigma gestionaba su propio equipo.</td>
+              <td>Birdie adquiere y gestiona: MikroTik Wi-Fi 6, smartphone rugged CUBOT, Samsung Note 20 Ultra, 2× Samsung Tab S10 Ultra.</td>
+              <td class="rel-med">Media</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:25px"></div><span class="val-num">$3.3K</span></div></td>
+            </tr>
+            <tr class="row-new">
+              <td><strong>Marco comercial</strong><br><span style="font-size:11px;color:var(--text-muted)">SLA + riesgos + cambios</span></td>
+              <td><span class="badge b-new">★ Nuevo</span></td>
+              <td style="color:var(--text-muted)">Sin SLA definido, sin análisis de riesgos, sin proceso de cambios.</td>
+              <td>SLA dedicado (5 min respuesta crítico). Análisis de 9 riesgos con mitigación. Control de cambios formal con VOBO. 2 visitas presenciales/año. Contrato 24 meses.</td>
+              <td class="rel-high">Alta</td>
+              <td><div class="val-bar-wrap"><div class="val-bar" style="width:15px"></div><span class="val-num">incluido</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr class="gap-divider">
+        <p class="gap-section-title">distribución del incremento — $36,830 USD adicionales</p>
+
+        <div style="margin-bottom: 0.5rem;">
+          <div class="price-row">
+            <span class="price-label">SAP sync + validación automática</span>
+            <div class="price-bar-bg"><div class="price-bar-fill" style="width:76%; background:var(--cyan);"></div></div>
+            <span class="price-val">~$8K</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">USDA RPA (Paso 4)</span>
+            <div class="price-bar-bg"><div class="price-bar-fill" style="width:70%; background:var(--cyan);"></div></div>
+            <span class="price-val">~$7K</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">Forecast y activos (Paso 5)</span>
+            <div class="price-bar-bg"><div class="price-bar-fill" style="width:60%; background:var(--cyan);"></div></div>
+            <span class="price-val">~$6K</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">Seguridad y control de patio (Paso 8)</span>
+            <div class="price-bar-bg"><div class="price-bar-fill" style="width:60%; background:var(--cyan);"></div></div>
+            <span class="price-val">~$6K</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">Activos logísticos cajas (Paso 7)</span>
+            <div class="price-bar-bg"><div class="price-bar-fill" style="width:43%; background:#79ddae;"></div></div>
+            <span class="price-val">~$4K</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">Dock Time + facturación sin SAP</span>
+            <div class="price-bar-bg"><div class="price-bar-fill" style="width:55%; background:#79ddae;"></div></div>
+            <span class="price-val">~$6K</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">Hardware + cierre + dashboards por rol</span>
+            <div class="price-bar-bg"><div class="price-bar-fill" style="width:68%; background:#ffc440;"></div></div>
+            <span class="price-val">~$7.3K</span>
+          </div>
+        </div>
+        <p class="gap-note">Distribución estimada sobre incremento neto de $36,830 USD (Fase 1+2+Hardware vs propuesta original).</p>
+
+      </div>
+    </div>
+
   </div>
 
   <footer class="proposal-footer">
@@ -920,12 +1276,32 @@ function showTab(id, btn) {
 
 // ── PRINT ─────────────────────────────────────────────────────────────
 window.addEventListener('beforeprint', function() {
-  document.querySelectorAll('.acc-item').forEach(el => el.classList.add('open'));
   document.body.classList.add('is-printing');
+  document.querySelectorAll('.acc-item').forEach(el => {
+    el.classList.add('open');
+    el.style.setProperty('overflow', 'visible', 'important');
+    el.style.setProperty('height', 'auto', 'important');
+  });
+  document.querySelectorAll('.acc-body').forEach(el => {
+    el.style.setProperty('display', 'block', 'important');
+    el.style.setProperty('visibility', 'visible', 'important');
+    el.style.setProperty('height', 'auto', 'important');
+    el.style.setProperty('overflow', 'visible', 'important');
+  });
 });
 window.addEventListener('afterprint', function() {
-  document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
   document.body.classList.remove('is-printing');
+  document.querySelectorAll('.acc-item').forEach(el => {
+    el.classList.remove('open');
+    el.style.removeProperty('overflow');
+    el.style.removeProperty('height');
+  });
+  document.querySelectorAll('.acc-body').forEach(el => {
+    el.style.removeProperty('display');
+    el.style.removeProperty('visibility');
+    el.style.removeProperty('height');
+    el.style.removeProperty('overflow');
+  });
 });
 
 // ── INIT: mostrar overlay si no hay sesión ────────────────────────────
