@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sigma Alimentos — Propuesta Comercial · Birdie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0A2647;
+      --navy-dark: #061A30;
+      --blue: #1E6091;
+      --cyan: #00B4D8;
+      --cyan-dark: #0096B8;
+      --cyan-light: #90E0EF;
+      --cyan-pale: #E0F7FA;
+      --bg: #F0F4F8;
+      --white: #FFFFFF;
+      --text: #1A202C;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --r: 12px;
+      --r-sm: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* ── VALID BANNER ─── */
+    .valid-banner { background: linear-gradient(90deg, #059669, #10B981); color: white; text-align: center; padding: 10px 16px; font-size: 13px; font-weight: 600; }
+
+    /* ── COVER ─── */
+    .proposal-cover {
+      position: relative; min-height: 54vh;
+      background-image: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&q=80');
+      background-size: cover; background-position: center;
+      display: flex; flex-direction: column;
+    }
+    .cover-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(6,26,48,0.95) 0%, rgba(10,38,71,0.90) 55%, rgba(0,120,160,0.60) 100%); }
+    .cover-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; padding: 32px 56px; min-height: 54vh; }
+    .cover-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .cover-logos { display: flex; align-items: center; gap: 20px; }
+    .birdie-logo-cover { display: flex; align-items: center; gap: 10px; color: white; text-decoration: none; }
+    .birdie-mark-lg { width: 46px; height: 46px; background: white; border-radius: 13px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+    .birdie-mark-lg img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
+    .birdie-logo-cover .name { font-size: 26px; font-weight: 900; letter-spacing: -1px; }
+    .logo-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.25); }
+    .prospect-name-cover { color: rgba(255,255,255,0.75); font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
+    .cover-bottom { margin-top: auto; padding-top: 40px; }
+    .cover-tag { display: inline-block; background: var(--cyan); color: white; font-size: 11px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; padding: 7px 18px; border-radius: 4px; margin-bottom: 22px; }
+    .cover-company { font-size: clamp(34px, 5vw, 64px); font-weight: 900; color: white; letter-spacing: -2px; line-height: 1.05; margin-bottom: 14px; }
+    .cover-subtitle { font-size: 18px; color: rgba(255,255,255,0.65); font-weight: 400; }
+    .cover-meta { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 28px; }
+    .cover-meta-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.55); font-size: 14px; }
+    .cover-meta-item strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+    .btn-pdf { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: white; border-radius: var(--r-sm); font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; text-decoration: none; white-space: nowrap; }
+    .btn-pdf:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── NAV ─── */
+    .proposal-nav { position: sticky; top: 0; z-index: 100; background: var(--navy); display: flex; justify-content: space-between; align-items: center; padding: 0 28px; box-shadow: var(--shadow-md); }
+    .nav-brand { display: flex; align-items: center; gap: 8px; color: white; font-size: 16px; font-weight: 800; padding: 16px 0; flex-shrink: 0; }
+    .nav-mark { width: 28px; height: 28px; background: white; border-radius: 7px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+    .nav-mark img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+    .nav-tabs { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .nav-tab { padding: 18px 18px; color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.18s; border: none; background: none; font-family: 'Inter', sans-serif; white-space: nowrap; }
+    .nav-tab:hover { color: rgba(255,255,255,0.78); }
+    .nav-tab.active { color: white; border-bottom: 3px solid var(--cyan); font-weight: 700; }
+
+    /* ── CONTENT ─── */
+    .proposal-content { max-width: 900px; margin: 0 auto; padding: 64px 24px; }
+    .section-tab { display: none; }
+    .section-tab.active { display: block; animation: fadeIn 0.28s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .sec-tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2.5px; color: var(--cyan-dark); margin-bottom: 14px; }
+    .sec-title { font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: var(--navy); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 22px; }
+    .sec-body { font-size: 16px; color: #4A5568; line-height: 1.85; margin-bottom: 40px; }
+    .divider { height: 1px; background: var(--border); margin: 36px 0; }
+
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 36px 0; }
+    .stat-card { background: white; border-radius: var(--r); padding: 28px 20px; border: 1px solid var(--border); text-align: center; box-shadow: var(--shadow); }
+    .stat-num { font-size: 40px; font-weight: 900; color: var(--navy); letter-spacing: -2px; line-height: 1; }
+    .stat-unit { font-size: 22px; color: var(--cyan); font-weight: 800; }
+    .stat-desc { font-size: 13px; color: var(--text-muted); margin-top: 8px; line-height: 1.4; }
+
+    .about-img { width: 100%; border-radius: var(--r); overflow: hidden; aspect-ratio: 16/6; margin: 32px 0; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Why rows */
+    .why-row { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+    .why-item { display: flex; align-items: flex-start; gap: 14px; padding: 18px 20px; background: white; border-radius: var(--r-sm); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .why-icon { width: 36px; height: 36px; background: var(--cyan-pale); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .why-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .why-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* Accordion */
+    .accordion { display: flex; flex-direction: column; gap: 10px; margin: 32px 0; }
+    .acc-item { background: white; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; transition: box-shadow 0.2s; }
+    .acc-item.open { box-shadow: 0 4px 20px rgba(0,180,216,0.12); border-color: var(--cyan); }
+    .acc-header { width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; transition: background 0.15s; }
+    .acc-header:hover { background: var(--bg); }
+    .acc-icon-wrap { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--navy), var(--blue)); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .acc-title { flex: 1; font-size: 15px; font-weight: 700; color: var(--navy); }
+    .acc-chevron { font-size: 16px; color: var(--cyan-dark); transition: transform 0.25s; flex-shrink: 0; }
+    .acc-item.open .acc-chevron { transform: rotate(180deg); }
+    .acc-body { display: none; padding: 0 20px 20px 74px; animation: fadeIn 0.2s ease; }
+    .acc-item.open .acc-body { display: block; }
+    .feat-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .feat-list li { font-size: 14px; color: #4A5568; line-height: 1.65; padding-left: 16px; position: relative; }
+    .feat-list li::before { content: '→'; position: absolute; left: 0; color: var(--cyan-dark); font-weight: 700; }
+    .feat-list li strong { color: var(--navy); }
+
+    /* Subsections inside accordion */
+    .acc-subsection { margin-bottom: 20px; }
+    .acc-subsection:last-child { margin-bottom: 0; }
+    .acc-sub-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--cyan-dark); background: var(--cyan-pale);
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;
+    }
+
+    /* ── ¿POR QUÉ BIRDIE? ─── */
+    .birdie-why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+    .birdie-why-card {
+      background: white; border-radius: var(--r); border: 1px solid var(--border);
+      padding: 24px 22px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 10px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .birdie-why-card:hover { box-shadow: 0 4px 20px rgba(0,180,216,0.13); border-color: var(--cyan); }
+    .birdie-why-card .bw-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+    }
+    .birdie-why-card h4 { font-size: 15px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; }
+    .birdie-why-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+    .birdie-why-card .bw-tag {
+      display: inline-flex; align-items: center;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--cyan-dark); background: var(--cyan-pale);
+      padding: 3px 10px; border-radius: 20px; width: fit-content;
+    }
+    .birdie-why-full {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%);
+      border-radius: var(--r); padding: 28px 32px; color: white; margin-top: 16px;
+    }
+    .birdie-why-full h4 { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 12px; }
+    .birdie-why-full p { font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.7; }
+    .birdie-why-full .bwf-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .birdie-why-full .bwf-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.55; }
+    .birdie-why-full .bwf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; margin-top: 7px; }
+
+    /* ── PROPUESTA COMERCIAL ─── */
+    .breakdown-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+    .breakdown-table th { background: var(--navy); color: white; padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .breakdown-table th:first-child { border-radius: 8px 0 0 0; }
+    .breakdown-table th:last-child { border-radius: 0 8px 0 0; text-align: right; }
+    .breakdown-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .breakdown-table td:last-child { text-align: right; font-weight: 700; color: var(--navy); white-space: nowrap; }
+    .breakdown-table tr:hover td { background: #fafcff; }
+    .breakdown-table .total-row td { background: var(--navy); color: white; font-weight: 800; font-size: 15px; }
+    .breakdown-table .total-row td:first-child { border-radius: 0 0 0 8px; }
+    .breakdown-table .total-row td:last-child { border-radius: 0 0 8px 0; }
+    .breakdown-table .note-row td { background: #f0f9ff; font-size: 12px; color: var(--cyan-dark); font-weight: 600; border-bottom: none; }
+    .td-concept strong { display: block; color: var(--navy); font-weight: 700; font-size: 14px; }
+    .td-concept .concept-tag {
+      display: inline-flex; margin-top: 5px; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      background: var(--cyan-pale); color: var(--cyan-dark);
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .td-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .amount-placeholder { color: var(--text-muted); font-style: italic; font-weight: 400; font-size: 13px; }
+
+    .includes-box { background: white; border-radius: var(--r); border: 1px solid var(--border); padding: 28px; margin: 32px 0; box-shadow: var(--shadow); }
+    .includes-box h3 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 18px; }
+    .includes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .includes-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #4A5568; }
+    .check { color: var(--success); font-weight: 800; font-size: 15px; flex-shrink: 0; }
+
+    /* Blueprint button */
+    .blueprint-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #0A2647, #1a4a7a);
+      color: white; padding: 14px 24px; border-radius: var(--r-sm);
+      font-size: 14px; font-weight: 700; text-decoration: none;
+      border: 1px solid rgba(0,180,216,0.3);
+      transition: all 0.2s; box-shadow: 0 4px 14px rgba(10,38,71,0.25);
+      margin: 24px 0;
+    }
+    .blueprint-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(0,180,216,0.3); border-color: var(--cyan); }
+    .blueprint-btn .bp-icon { font-size: 18px; }
+    .blueprint-btn .bp-label { display: flex; flex-direction: column; }
+    .blueprint-btn .bp-label span:first-child { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 1px; }
+    .blueprint-btn .bp-label span:last-child { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; }
+
+    /* ── CONDICIONES COMERCIALES ─── */
+    .terms-block { margin-bottom: 28px; padding: 22px 24px; background: white; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .terms-block h3 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .terms-block h3 .tc-num { width: 26px; height: 26px; background: var(--cyan-pale); color: var(--cyan-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+    .terms-block p, .terms-block li { font-size: 13px; color: #4A5568; line-height: 1.75; }
+    .terms-block ul { padding-left: 16px; display: flex; flex-direction: column; gap: 6px; }
+    .terms-block ul li { list-style: none; padding-left: 12px; position: relative; }
+    .terms-block ul li::before { content: '→'; position: absolute; left: -4px; color: var(--cyan-dark); font-weight: 700; font-size: 11px; }
+
+    /* Payment timeline */
+    .payment-timeline { display: flex; flex-direction: column; gap: 0; margin: 16px 0; }
+    .pt-row { display: grid; grid-template-columns: 1fr 2fr auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .pt-row:last-child { border-bottom: none; }
+    .pt-moment { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .pt-concept { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .pt-pct { display: inline-flex; align-items: center; justify-content: center; padding: 5px 14px; border-radius: 20px; background: var(--cyan-pale); color: var(--cyan-dark); font-size: 14px; font-weight: 800; white-space: nowrap; }
+    .pt-header { display: grid; grid-template-columns: 1fr 2fr auto; gap: 16px; padding: 8px 0 12px; border-bottom: 2px solid var(--navy); }
+    .pt-header span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
+
+    /* ── CTA ─── */
+    .cta-block { background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%); border-radius: var(--r); padding: 40px; color: white; text-align: center; margin-top: 48px; }
+    .cta-block h3 { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 10px; }
+    .cta-block p { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 24px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan); color: white; padding: 14px 28px; border-radius: var(--r-sm); font-size: 15px; font-weight: 800; text-decoration: none; transition: all 0.2s; }
+    .cta-btn:hover { background: var(--cyan-dark); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,180,216,0.4); }
+
+    /* ── FOOTER ─── */
+    .proposal-footer { background: var(--navy-dark); color: rgba(255,255,255,0.4); text-align: center; padding: 28px 24px; font-size: 12px; }
+    .footer-brand { display: flex; align-items: center; justify-content: center; gap: 8px; color: white; font-size: 18px; font-weight: 900; margin-bottom: 8px; }
+    .footer-mark { width: 26px; height: 26px; background: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .footer-mark img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+
+    /* ── PASSWORD OVERLAY ─── */
+    #pw-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, #0d2d52 100%);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s;
+    }
+    #pw-overlay.fade { opacity: 0; pointer-events: none; }
+    #pw-card {
+      background: white; border-radius: 20px; padding: 48px 40px;
+      width: 100%; max-width: 380px; text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+    #pw-logo { width: 52px; height: 52px; background: var(--navy); border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0 auto 16px; }
+    #pw-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+    #pw-card h2 { font-size: 22px; font-weight: 900; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 4px; }
+    #pw-card .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+    #pw-card .for-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
+    #pw-card .for-name { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 28px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    #pw-card .for-name img { height: 22px; object-fit: contain; }
+    #pw-input {
+      width: 100%; padding: 12px 16px; border: 2px solid var(--border);
+      border-radius: var(--r-sm); font-size: 15px; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+      margin-bottom: 12px; text-align: center; letter-spacing: 3px;
+    }
+    #pw-input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,180,216,0.12); }
+    #pw-btn {
+      width: 100%; padding: 13px; background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: white; border: none; border-radius: var(--r-sm); font-size: 15px;
+      font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: opacity 0.15s;
+    }
+    #pw-btn:hover { opacity: 0.88; }
+    #pw-btn:disabled { opacity: 0.5; cursor: default; }
+    #pw-err { color: #e53e3e; font-size: 13px; margin-top: 10px; display: none; font-weight: 600; }
+    #pw-https-note { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.5; }
+    @media print {
+      .proposal-nav, .valid-banner, .btn-pdf { display: none !important; }
+      .section-tab { display: block !important; }
+      .proposal-cover { min-height: 30vh; }
+    }
+    @media (max-width: 640px) {
+      .cover-content { padding: 24px 24px; }
+      .birdie-why-grid { grid-template-columns: 1fr; }
+      .includes-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
+      .pt-row, .pt-header { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── PASSWORD OVERLAY ──────────────────────────────────────────────── -->
+<div id="pw-overlay" style="display:none;">
+  <div id="pw-card">
+    <div id="pw-logo"><img src="https://i.ibb.co/4ZnHnjZX/logos-9.png" alt="Birdie" /></div>
+    <h2>birdie</h2>
+    <p class="sub">Propuesta Comercial · Documento Confidencial</p>
+    <div class="for-label">Preparada para</div>
+    <div class="for-name">
+      <img src="https://i.ibb.co/gqVvQ5Q/Sigma-Alimentos-logotipo.png" alt="Sigma Alimentos" />
+    </div>
+    <input id="pw-input" type="password" placeholder="••••••••••" autocomplete="current-password"
+      onkeydown="if(event.key==='Enter') birdieCheckPw()" />
+    <button id="pw-btn" onclick="birdieCheckPw()">Acceder</button>
+    <p id="pw-err">Contraseña incorrecta. Intenta de nuevo.</p>
+    <p id="pw-https-note">🔒 Este documento está protegido.<br>Acceso exclusivo para Sigma Alimentos.</p>
+  </div>
+</div>
+
+<!-- ── PROPOSAL ──────────────────────────────────────────────────────── -->
+<div id="proposal-view">
+
+  <!-- Validity banner -->
+  <div class="valid-banner">
+    📅 Propuesta válida hasta: <strong id="valid-date">16 de mayo de 2026</strong>
+  </div>
+
+  <!-- COVER -->
+  <div class="proposal-cover">
+    <div class="cover-overlay"></div>
+    <div class="cover-content">
+      <div class="cover-top">
+        <div class="cover-logos">
+          <a class="birdie-logo-cover" href="#">
+            <div class="birdie-mark-lg"><img src="https://i.ibb.co/4ZnHnjZX/logos-9.png" alt="Birdie" /></div>
+            <span class="name">birdie</span>
+          </a>
+          <div class="logo-sep"></div>
+          <img src="https://i.ibb.co/gqVvQ5Q/Sigma-Alimentos-logotipo.png" alt="Sigma Alimentos" style="max-height:38px;max-width:160px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.85;" />
+        </div>
+        <button class="btn-pdf" onclick="window.print()">⬇ Descargar PDF</button>
+      </div>
+
+      <div class="cover-bottom">
+        <div class="cover-tag">PROPUESTA COMERCIAL</div>
+        <h1 class="cover-company">Sigma Alimentos</h1>
+        <p class="cover-subtitle">Plataforma de Inteligencia Operativa para Comercio Exterior</p>
+        <div class="cover-meta">
+          <div class="cover-meta-item">📅 <strong>16 de abril de 2026</strong></div>
+          <div class="cover-meta-item">⏱ Vigencia: <strong>30 días naturales</strong></div>
+          <div class="cover-meta-item">👤 <strong>Abraham López · Director de Growth</strong></div>
+          <div class="cover-meta-item">📧 <strong>abraham@birdie.mx</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav class="proposal-nav">
+    <div class="nav-brand">
+      <div class="nav-mark"><img src="https://i.ibb.co/4ZnHnjZX/logos-9.png" alt="Birdie" /></div>
+      birdie
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showTab('t-about', this)">Sobre Birdie</button>
+      <button class="nav-tab" onclick="showTab('t-features', this)">Plataforma</button>
+      <button class="nav-tab" onclick="showTab('t-why', this)">¿Por qué Birdie?</button>
+      <button class="nav-tab" onclick="showTab('t-proposal', this)">Propuesta Comercial</button>
+      <button class="nav-tab" onclick="showTab('t-terms', this)">Condiciones</button>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="proposal-content">
+
+    <!-- ─── SOBRE BIRDIE ─────────────────── -->
+    <div id="t-about" class="section-tab active">
+      <div class="sec-tag">SOBRE NOSOTROS</div>
+      <h1 class="sec-title">IA para tu comercio exterior</h1>
+      <p class="sec-body">Birdie es una plataforma tecnológica que centraliza, valida y da trazabilidad total a las operaciones de importación y exportación, permitiendo a las empresas reducir riesgos, errores y costos operativos mientras toman mejores decisiones con datos en tiempo real.</p>
+
+      <div class="about-img"><img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1200&q=80" alt="Puerto comercial" loading="lazy" /></div>
+
+      <div class="stats-row">
+        <div class="stat-card"><div><span class="stat-num">7,000</span><span class="stat-unit">+</span></div><div class="stat-desc">Contenedores rastreados en la plataforma</div></div>
+        <div class="stat-card"><div><span class="stat-num">98</span><span class="stat-unit">%</span></div><div class="stat-desc">Satisfacción de clientes activos</div></div>
+        <div class="stat-card"><div><span class="stat-num">40</span><span class="stat-unit">%</span></div><div class="stat-desc">Reducción promedio en tiempos de despacho</div></div>
+      </div>
+
+      <div class="divider"></div>
+      <h2 style="font-size:22px;font-weight:800;color:var(--navy);margin-bottom:20px;letter-spacing:-0.5px">Propuesta para Sigma</h2>
+      <div class="why-row">
+        <div class="why-item">
+          <div class="why-icon">📉</div>
+          <div><div class="why-title">Reduce incidencias operativas y costos ocultos</div><div class="why-desc">Detecta errores antes de que se conviertan en problemas costosos en aduana o almacén, tanto en puertos como en frontera.</div></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🔍</div>
+          <div><div class="why-title">Control unificado: puertos + Laredo en una sola plataforma</div><div class="why-desc">Visibilidad completa de cada operación, sin importar el punto de entrada, desde origen hasta entrega en almacén.</div></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <div><div class="why-title">Elimina la dependencia de procesos manuales</div><div class="why-desc">Centraliza toda la operación en una sola plataforma. Fin a correos perdidos, hojas de cálculo y doble captura.</div></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🚀</div>
+          <div><div class="why-title">Sienta las bases de una operación logística escalable</div><div class="why-desc">Una plataforma que crece con Sigma y se adapta a la complejidad y volúmenes de tu operación de comercio exterior.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FUNCIONALIDADES ───────────────── -->
+    <div id="t-features" class="section-tab">
+      <div class="sec-tag">PLATAFORMA</div>
+      <h1 class="sec-title">Todo lo que necesitas para gestionar tus operaciones</h1>
+      <p class="sec-body">Birdie integra en una sola plataforma todas las herramientas que tu equipo necesita para operar con eficiencia, visibilidad y control total, tanto en puertos marítimos como en la operación de Laredo.</p>
+
+      <div class="accordion">
+
+        <!-- 1. Gestión Operativa -->
+        <div class="acc-item open">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon-wrap">⚙️</div>
+            <span class="acc-title">Sistema de Gestión Operativa</span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="acc-body">
+
+            <!-- Subsección: Puertos -->
+            <div class="acc-subsection">
+              <div class="acc-sub-label">⚓ Puertos</div>
+              <ul class="feat-list">
+                <li><strong>Personalización de columnas</strong> — Configura las columnas relevantes para replicar la visibilidad actual de tu operación.</li>
+                <li><strong>Trazabilidad aérea y marítima (multinaviera)</strong> — Automatización desde POD, POL, ETD, ETA, fecha de descarga y retorno de vacío.</li>
+                <li><strong>Integración directa con SOIA</strong> — Visibilidad en despacho aduanal, fechas de pago de pedimento, importe y fecha de desaduanamiento.</li>
+                <li><strong>Bitácora colaborativa multiárea</strong> — Registro de operaciones compartido entre compras, finanzas, almacén y demás áreas.</li>
+              </ul>
+            </div>
+
+            <!-- Subsección: Laredo -->
+            <div class="acc-subsection">
+              <div class="acc-sub-label">🌉 Laredo</div>
+
+              <div style="margin-bottom:14px">
+                <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Flujo operativo end-to-end (core del sistema)</div>
+                <ul class="feat-list">
+                  <li><strong>Gestión completa de flujo</strong> — IN → TUD → SAP → TA → TW → TOK → INV → OUT → Cierre en una sola cadena operativa sin fricciones.</li>
+                  <li><strong>Tablero en tiempo real</strong> — Estatus por operación y control por roles, con visibilidad transversal para todos los equipos involucrados.</li>
+                </ul>
+              </div>
+
+              <div style="margin-bottom:14px">
+                <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Automatización y capacidades inteligentes</div>
+                <ul class="feat-list">
+                  <li><strong>OCR + IA para extracción y validación de documentos</strong> — Captura automática de datos desde facturas, manifiestos y documentos de cruce, con validación cruzada en tiempo real.</li>
+                </ul>
+              </div>
+
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Control operativo y trazabilidad</div>
+                <ul class="feat-list">
+                  <li><strong>Control de accesos con QR</strong> — Gestión de entrada y salida de choferes y cajas con trazabilidad completa por evento.</li>
+                  <li><strong>Monitoreo de dock time, calidad, incidencias y desempeño</strong> — Métricas operativas en tiempo real con histórico por operador, turno y cliente.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. Control Documental -->
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon-wrap">📁</div>
+            <span class="acc-title">Control Documental</span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="acc-body">
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:16px;padding:12px 14px;background:var(--cyan-pale);border-radius:var(--r-sm);border-left:3px solid var(--cyan);">
+              Toda la documentación de comercio exterior de Sigma Alimentos se consolida en un solo expediente digital, integrando tanto las operaciones de <strong>puertos marítimos</strong> como la <strong>frontera de Laredo</strong>, alineada a los requerimientos de la Ley Aduanera aplicable y sus disposiciones complementarias.
+            </p>
+            <ul class="feat-list">
+              <li><strong>Gestión segura de documentos</strong> — Carga, organiza, solicita y comparte documentos con agentes aduanales y agentes de carga: factura comercial, packing list, BL, certificados de origen y más.</li>
+              <li><strong>Expediente completo por operación</strong> — Garantiza que cada operación cuente con todos sus documentos requeridos antes del despacho.</li>
+              <li><strong>Validación automática con IA</strong> — Revisión inteligente de documentos para detectar errores o inconsistencias antes del cruce o despacho.</li>
+              <li><strong>Retención documental de 5 años</strong> — Acceso inmediato a cualquier expediente en caso de auditorías del SAT, ANAM o autoridades aduaneras.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. Alertas Inteligentes -->
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon-wrap">🔔</div>
+            <span class="acc-title">Alertas Inteligentes
+              <span style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;background:#25D366;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                WhatsApp
+              </span>
+            </span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="acc-body">
+            <ul class="feat-list">
+              <li><strong>Notificaciones automáticas por correo</strong> — Alertas por cambios de ETA, documentos faltantes en embarques por arribar, alertas de Cargo Ready Date (CRD) y más.</li>
+              <li><strong>Integración con WhatsApp</strong> — Consulta el estatus de operaciones, contenedores y fechas de llegada directamente desde WhatsApp, sin necesidad de ingresar a la plataforma.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. Colaboración Multiárea -->
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon-wrap">🤝</div>
+            <span class="acc-title">Colaboración con Diferentes Áreas</span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="acc-body">
+            <ul class="feat-list">
+              <li><strong>Fuentes de información por área</strong> — Construimos vistas específicas para compras, finanzas, almacén y cualquier otra área que requiera visibilidad operativa.</li>
+              <li><strong>Implementación detallada por equipo</strong> — Cada equipo de trabajo recibe su configuración y capacitación específica según sus necesidades operativas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 5. KPIs y Analítica -->
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon-wrap">📊</div>
+            <span class="acc-title">Tableros de KPIs y Analítica</span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="acc-body">
+            <ul class="feat-list">
+              <li><strong>Indicadores logísticos en tiempo real</strong> — Tiempos promedio de despacho aduanal, eficiencia logística, costos acumulados y más, disponibles desde el primer día.</li>
+              <li><strong>Tableros personalizados</strong> — A partir del tercer mes de colaboración, se desarrollan dashboards de indicadores personalizados para la operación de Sigma.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── ¿POR QUÉ BIRDIE? ──────────────── -->
+    <div id="t-why" class="section-tab">
+      <div class="sec-tag">DIFERENCIADORES</div>
+      <h1 class="sec-title">¿Por qué Birdie?</h1>
+      <p class="sec-body">No somos un software genérico adaptado al comercio exterior. Somos una empresa construida desde adentro de la operación, con un enfoque obsesivo en resolver los problemas reales de empresas como Sigma.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:40px 0;">
+
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:36px 24px;background:white;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow);">
+          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;font-size:28px;">⚡</div>
+          <div style="font-size:16px;font-weight:800;color:var(--navy);letter-spacing:-0.3px;line-height:1.3;">Velocidad de<br>desarrollo</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:36px 24px;background:white;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow);">
+          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;font-size:28px;">🎯</div>
+          <div style="font-size:16px;font-weight:800;color:var(--navy);letter-spacing:-0.3px;line-height:1.3;">Enfoque<br>personalizado</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:36px 24px;background:white;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow);">
+          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;font-size:28px;">🔗</div>
+          <div style="font-size:16px;font-weight:800;color:var(--navy);letter-spacing:-0.3px;line-height:1.3;">Sinergia<br>real</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ─── PROPUESTA COMERCIAL ───────────── -->
+    <div id="t-proposal" class="section-tab">
+      <div class="sec-tag">INVERSIÓN</div>
+      <h1 class="sec-title">Propuesta para Sigma Alimentos</h1>
+      <p class="sec-body">A continuación se presenta el desglose de la inversión para el proyecto de implementación de Birdie en las operaciones de Sigma Alimentos.</p>
+
+      <!-- Blueprint button -->
+      <a href="https://drive.google.com/file/d/1dChFUkf5n94Zw_ClNLnPUY4_nTBIpPWZ/view?usp=sharing" id="blueprint-btn" class="blueprint-btn" target="_blank">
+        <span class="bp-icon">📐</span>
+        <span class="bp-label">
+          <span>Documento técnico</span>
+          <span>Blueprint · Laredo</span>
+        </span>
+        <span style="margin-left:4px;opacity:0.5;font-size:12px">↗</span>
+      </a>
+
+      <!-- Tabla de inversión -->
+      <h3 style="font-size:17px;font-weight:800;color:var(--navy);margin:28px 0 14px">Detalle de la inversión</h3>
+      <table class="breakdown-table">
+        <thead>
+          <tr>
+            <th style="width:26%">Concepto</th>
+            <th>Descripción</th>
+            <th style="width:18%">Monto (USD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-concept">
+              <strong>Desarrollo SIC Laredo</strong>
+              <span class="concept-tag">Pago único</span>
+            </td>
+            <td class="td-desc">Desarrollo del módulo XBorder / SIC Laredo como solución integral para la gestión del flujo aduanal terrestre en Laredo: desde el preregistro del transportista hasta la salida (OUT). Incluye trazabilidad completa, control documental conforme a regulaciones aduaneras, dashboards en tiempo real, asignación inteligente de transporte y tolerancia operativa ante fallas de red, bajo arquitectura segura y auditable.</td>
+            <td style="font-weight:700;color:var(--navy);white-space:nowrap;text-align:right;">$124,830<br><span style="font-size:11px;font-weight:500;color:var(--text-muted);">única exhibición</span></td>
+          </tr>
+          <tr>
+            <td class="td-concept">
+              <strong>Licencia Mensual</strong>
+              <span class="concept-tag">SaaS · Recurrente</span>
+            </td>
+            <td class="td-desc">Acceso completo a la plataforma Birdie bajo esquema SaaS. Incluye usuarios ilimitados, actualizaciones continuas de funcionalidades, infraestructura cloud (servidores, base de datos y almacenamiento), soporte técnico 9×5, alta disponibilidad con uptime garantizado del 99.5% y respaldos automáticos. </td>
+            <td style="font-weight:700;color:var(--navy);white-space:nowrap;text-align:right;">$8,200<br><span style="font-size:11px;font-weight:500;color:var(--text-muted);">por mes</span></td>
+          </tr>
+          <tr>
+            <td class="td-concept">
+              <strong>Integración ERP</strong>
+              <span class="concept-tag" style="background:#d1fae5;color:#065f46;">Incluido</span>
+            </td>
+            <td class="td-desc">Conexión bidireccional entre Birdie y el ERP de Sigma (SAP u otro) mediante API REST. Sincronización automática de órdenes de compra, entradas de almacén y datos maestros de proveedores. Incluye mapeo de campos, pruebas de integración y documentación técnica del conector.</td>
+            <td style="font-weight:700;color:var(--success);text-align:right;">Incluido</td>
+          </tr>
+
+          <!-- Separador visual -->
+          <tr style="background:#f8fafc;">
+            <td colspan="3" style="padding:8px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">Totales anualizados</td>
+          </tr>
+
+          <!-- Total estándar -->
+          <tr style="background:#f0f4f8;">
+            <td colspan="2" style="padding:14px 16px;">
+              <div style="font-size:14px;font-weight:700;color:var(--navy);">Total Año 1 — Pago mensual</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Desarrollo ($124,830) + Licencia 12 meses ($8,200 × 12 = $98,400)</div>
+            </td>
+            <td style="text-align:right;font-weight:800;font-size:16px;color:var(--navy);padding:14px 16px;white-space:nowrap;">$223,230</td>
+          </tr>
+
+          <!-- Total con descuento anual -->
+          <tr class="total-row" style="position:relative;">
+            <td colspan="2">
+              <strong>Total Año 1 — Licencia anualizada</strong>
+              <div style="font-size:12px;font-weight:500;color:rgba(255,255,255,0.65);margin-top:4px;">Desarrollo ($124,830) + Licencia anual con 12% dto. ($86,592) · Ahorro: $11,808</div>
+            </td>
+            <td style="text-align:right;white-space:nowrap;">
+              <div style="font-size:18px;font-weight:900;">$211,422</div>
+              <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.6);margin-top:2px;">USD · año 1</div>
+            </td>
+          </tr>
+
+          <tr class="note-row">
+            <td colspan="3">💡 El descuento del 12% aplica únicamente sobre la licencia anual pagada por adelantado. A partir del año 2, solo se renueva la licencia. Los montos no incluyen IVA. Pago en MXN al tipo de cambio DOF vigente.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Incluido -->
+      <div class="includes-box">
+        <h3>✅ Incluido en el costo del proyecto</h3>
+        <div class="includes-grid">
+          <div class="includes-item"><span class="check">✓</span> Análisis de requerimientos y diseño UX/UI</div>
+          <div class="includes-item"><span class="check">✓</span> Desarrollo e integración completa</div>
+          <div class="includes-item"><span class="check">✓</span> QA, pruebas y despliegue a producción</div>
+          <div class="includes-item"><span class="check">✓</span> Acompañamiento go-live y estabilización</div>
+          <div class="includes-item"><span class="check">✓</span> Infraestructura cloud (desarrollo + año 1)</div>
+          <div class="includes-item"><span class="check">✓</span> Implementación presencial en Laredo, TX</div>
+          <div class="includes-item"><span class="check">✓</span> 2 visitas semestrales de seguimiento/año</div>
+          <div class="includes-item"><span class="check">✓</span> Soporte técnico durante toda la vigencia</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── CONDICIONES COMERCIALES ───────── -->
+    <div id="t-terms" class="section-tab">
+      <div class="sec-tag">CONDICIONES</div>
+      <h1 class="sec-title">Condiciones Comerciales</h1>
+      <p class="sec-body" style="margin-bottom:32px">Esta propuesta está sujeta a las siguientes condiciones. Para cualquier duda contáctanos en <a href="mailto:abraham@birdie.mx" style="color:var(--cyan-dark)">abraham@birdie.mx</a>.</p>
+
+      <!-- 1. Forma de pago -->
+      <div class="terms-block">
+        <h3><span class="tc-num">1</span> Forma de Pago · Proyecto Laredo</h3>
+        <p style="margin-bottom:16px">Los pagos se realizan por fase contra entregables aceptados, mediante transferencia electrónica a cuenta bancaria de Birdie Technologies. El calendario detallado de anticipos, hitos intermedios y pago contra aceptación final se formaliza en el contrato marco.</p>
+
+        <div style="margin-top:4px">
+          <div class="pt-header">
+            <span>Momento</span>
+            <span>Concepto</span>
+            <span>%</span>
+          </div>
+          <div class="payment-timeline">
+            <div class="pt-row">
+              <div class="pt-moment">Firma de contrato</div>
+              <div class="pt-concept">Anticipo para inicio de desarrollo</div>
+              <div class="pt-pct">50%</div>
+            </div>
+            <div class="pt-row">
+              <div class="pt-moment">Entrega y aceptación Fase 1</div>
+              <div class="pt-concept">Núcleo operativo en producción</div>
+              <div class="pt-pct">25%</div>
+            </div>
+            <div class="pt-row">
+              <div class="pt-moment">30 días post go-live estable</div>
+              <div class="pt-concept">Cierre de proyecto y entrega formal</div>
+              <div class="pt-pct">25%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Vigencia -->
+      <div class="terms-block">
+        <h3><span class="tc-num">2</span> Vigencia de la Propuesta</h3>
+        <p>La presente propuesta tiene una vigencia de <strong>30 días naturales</strong> a partir de su fecha de presentación. Transcurrido dicho plazo sin confirmación por escrito, Birdie se reserva el derecho de revisar montos y condiciones.</p>
+      </div>
+
+      <!-- 3. Compromiso mínimo -->
+      <div class="terms-block">
+        <h3><span class="tc-num">3</span> Compromiso Mínimo de Contrato</h3>
+        <p>La relación comercial tiene una duración mínima de <strong>24 meses</strong>, estructurada en dos etapas:</p>
+        <ul style="margin-top:12px">
+          <li><strong>Año 1:</strong> Comprende el desarrollo, implementación y estabilización de la plataforma.</li>
+          <li><strong>Año 2:</strong> Garantiza la operación continua, el soporte técnico y la madurez funcional del sistema.</li>
+        </ul>
+        <p style="margin-top:12px">Este esquema protege la inversión de Sigma al asegurar acompañamiento activo de Birdie durante toda la curva de adopción.</p>
+      </div>
+
+      <!-- 4. Alcance del costo -->
+      <div class="terms-block">
+        <h3><span class="tc-num">4</span> Alcance del Costo</h3>
+        <p>El costo incluye análisis de requerimientos, diseño UX/UI, desarrollo, QA, pruebas de integración, despliegue a producción y acompañamiento go-live para todas las funcionalidades listadas en este documento. Incluye también la <strong>infraestructura cloud</strong> (servidores, base de datos y almacenamiento) durante el período de desarrollo y el primer año de operación.</p>
+      </div>
+
+      <!-- 5. Implementación en campo -->
+      <div class="terms-block">
+        <h3><span class="tc-num">5</span> Implementación en Campo y Visitas de Seguimiento</h3>
+        <p style="margin-bottom:12px">El alcance contempla la implementación presencial en las instalaciones de Sigma en <strong>Laredo, TX</strong>, coordinada por el equipo de Birdie. Adicionalmente, se incluyen <strong>dos visitas semestrales de seguimiento por año</strong> durante la vigencia del contrato.</p>
+        <p style="margin-bottom:8px">Cada visita comprende:</p>
+        <ul>
+          <li>Revisión del desempeño operativo del sistema</li>
+          <li>Sesión de retroalimentación con los equipos clave de Sigma</li>
+          <li>Identificación de oportunidades de mejora</li>
+          <li>Verificación de adopción por rol</li>
+          <li>Entrega de un reporte ejecutivo de hallazgos y recomendaciones</li>
+        </ul>
+      </div>
+
+      <!-- 6. SLA -->
+      <div class="terms-block">
+        <h3><span class="tc-num">6</span> Soporte y SLA</h3>
+        <ul>
+          <li>Soporte Lunes–Viernes 9:00–18:00 (CDMX) durante toda la vigencia del contrato.</li>
+          <li>Tiempos de respuesta: crítico 2h · alto 4h · normal 24h hábiles.</li>
+          <li>Uptime garantizado del 99.5% mensual en ambiente de producción.</li>
+          <li>Canal de escalación directa con el Director de Growth de Birdie.</li>
+        </ul>
+      </div>
+
+      <!-- 7. Confidencialidad -->
+      <div class="terms-block">
+        <h3><span class="tc-num">7</span> Confidencialidad y Datos</h3>
+        <p>Birdie trata todos los datos de Sigma con estricta confidencialidad. Los datos son propiedad del cliente y no serán compartidos con terceros. El servicio cumple con la Ley Federal de Protección de Datos Personales (LFPDPPP) y las regulaciones aplicables en Estados Unidos.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-block">
+        <h3>¿Listos para empezar?</h3>
+        <p>Para confirmar esta propuesta o resolver cualquier duda, contáctanos directamente:</p>
+        <a href="mailto:abraham@birdie.mx" class="cta-btn">📧 abraham@birdie.mx</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="proposal-footer">
+    <div class="footer-brand">
+      <div class="footer-mark"><img src="https://i.ibb.co/4ZnHnjZX/logos-9.png" alt="Birdie" /></div>
+      birdie
+    </div>
+    <p>© 2026 Birdie Technologies · Plataforma de Inteligencia para el Comercio Exterior</p>
+    <p style="margin-top:4px;font-size:11px">Propuesta presentada el 16 de abril de 2026 · Documento confidencial</p>
+  </footer>
+
+</div>
+
+<script>
+'use strict';
+
+// ── SHA-256 PASSWORD GATE ──────────────────────────────────────────────
+// Hash SHA-256 de la contraseña. Para cambiarla, genera el nuevo hash en:
+// https://emn178.github.io/online-tools/sha256.html  y reemplaza la línea de abajo.
+const BIRDIE_HASH = 'af66949aa78260bdee1a2d442f8baaa2f450195fded5bc9641d2458282dd2a2f';
+const BIRDIE_KEY  = 'birdie_sigma_v1';
+
+async function birdieCheckPw() {
+  const input = document.getElementById('pw-input');
+  const btn   = document.getElementById('pw-btn');
+  const err   = document.getElementById('pw-err');
+  const val   = input.value;
+  if (!val) return;
+  btn.disabled = true; btn.textContent = '...';
+  err.style.display = 'none';
+  try {
+    const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+    const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    if (hash === BIRDIE_HASH) {
+      sessionStorage.setItem(BIRDIE_KEY, '1');
+      const ov = document.getElementById('pw-overlay');
+      ov.classList.add('fade');
+      setTimeout(() => { ov.style.display = 'none'; }, 320);
+    } else {
+      err.style.display = 'block';
+      input.value = ''; input.focus();
+      btn.disabled = false; btn.textContent = 'Acceder';
+    }
+  } catch(e) {
+    err.textContent = 'Requiere conexión HTTPS para funcionar.';
+    err.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Acceder';
+  }
+}
+
+// Mostrar overlay si no hay sesión activa
+(function init() {
+  if (!sessionStorage.getItem(BIRDIE_KEY)) {
+    const ov = document.getElementById('pw-overlay');
+    ov.style.display = 'flex';
+    setTimeout(() => { const i = document.getElementById('pw-input'); if(i) i.focus(); }, 80);
+  }
+})();
+
+
+  const item = btn.closest('.acc-item');
+  item.classList.toggle('open');
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: document.querySelector('.proposal-nav').offsetTop, behavior: 'smooth' });
+}
+
+// Print: expand all accordions
+window.addEventListener('beforeprint', function() {
+  document.querySelectorAll('.acc-item').forEach(el => el.classList.add('open'));
+  document.querySelectorAll('.section-tab').forEach(el => el.style.display = 'block');
+});
+window.addEventListener('afterprint', function() {
+  document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('.section-tab').forEach(el => el.style.display = '');
+  document.querySelector('.section-tab.active') && (document.querySelector('.section-tab.active').style.display = 'block');
+});
+</script>
+</body>
+</html>
