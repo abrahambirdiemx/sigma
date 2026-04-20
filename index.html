@@ -73,7 +73,7 @@
     .nav-tab.active { color: white; border-bottom: 3px solid var(--cyan); font-weight: 700; }
 
     /* ── CONTENT ─── */
-    .proposal-content { max-width: 900px; margin: 0 auto; padding: 64px 24px; }
+    .proposal-content { max-width: 1100px; margin: 0 auto; padding: 64px 48px; }
     .section-tab { display: none; }
     .section-tab.active { display: block; animation: fadeIn 0.28s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -273,9 +273,97 @@
     #pw-err { color: #e53e3e; font-size: 13px; margin-top: 10px; display: none; font-weight: 600; }
     #pw-https-note { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.5; }
     @media print {
-      .proposal-nav, .valid-banner, .btn-pdf { display: none !important; }
+      /* ── UI oculta ── */
+      .proposal-nav, .valid-banner, .btn-pdf, #pw-overlay { display: none !important; }
+      .blueprint-btn { display: none !important; }
+      #t-why { display: none !important; }
+
+      /* ── Mostrar todas las demás secciones ── */
       .section-tab { display: block !important; }
-      .proposal-cover { min-height: 30vh; }
+
+      /* ── Colores y base ── */
+      body { font-size: 11px !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .proposal-content { padding: 24px 16px !important; max-width: 100% !important; }
+
+      /* ── HOJA 1: Portada compacta (40% de alto) + "IA para tu comercio exterior" ── */
+      .proposal-cover {
+        background-image: none !important;
+        background: var(--navy) !important;
+        min-height: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+      }
+      .cover-overlay { display: none !important; }
+      .cover-content {
+        min-height: auto !important;
+        padding: 28px 40px 24px !important;
+      }
+      /* Reducir tamaños de texto en portada */
+      .cover-company { font-size: 36px !important; margin-bottom: 8px !important; }
+      .cover-subtitle { font-size: 14px !important; }
+      .cover-meta { gap: 14px !important; margin-top: 14px !important; }
+      .cover-meta-item { font-size: 11px !important; }
+      .cover-tag { margin-bottom: 10px !important; padding: 4px 12px !important; }
+      .cover-bottom { padding-top: 16px !important; }
+
+      /* "Sobre Birdie" (IA para tu comercio exterior) en la misma hoja 1 que la portada */
+      #t-about { page-break-before: avoid !important; }
+
+      /* Ocultar imagen del puerto en la sección sobre Birdie */
+      .about-img { display: none !important; }
+
+      /* ── HOJA 3: Título de Plataforma + Gestión Operativa en una sola hoja ── */
+      #t-features { page-break-before: always !important; }
+      #t-features .sec-tag { margin-bottom: 6px !important; }
+      #t-features .sec-title { font-size: 20px !important; margin-bottom: 6px !important; }
+      #t-features .sec-body { font-size: 10px !important; line-height: 1.5 !important; margin-bottom: 10px !important; }
+      #t-features .accordion { margin: 8px 0 !important; gap: 5px !important; }
+      #t-features .acc-header { padding: 8px 12px !important; }
+      #t-features .acc-icon-wrap { width: 28px !important; height: 28px !important; font-size: 13px !important; }
+      #t-features .acc-title { font-size: 11px !important; }
+      #t-features .acc-body { padding: 0 12px 10px 50px !important; }
+      #t-features .feat-list { gap: 5px !important; }
+      #t-features .feat-list li { font-size: 9.5px !important; line-height: 1.45 !important; }
+      #t-features .acc-subsection { margin-bottom: 8px !important; }
+      #t-features .acc-sub-label { font-size: 9px !important; padding: 2px 8px !important; margin-bottom: 6px !important; }
+      #t-features [style*="font-size:12px;font-weight:700"] { font-size: 9px !important; margin-bottom: 4px !important; }
+      #t-features p[style*="cyan-pale"] { font-size: 9.5px !important; padding: 7px 10px !important; margin-bottom: 8px !important; }
+      /* Gestión Operativa no se corta */
+      #t-features .acc-item:first-child { page-break-inside: avoid !important; }
+
+      /* ── HOJA 4-5: Propuesta + tabla en misma hoja ── */
+      #t-proposal { page-break-before: always !important; }
+      #t-proposal .sec-title,
+      #t-proposal .sec-body,
+      #t-proposal h3,
+      .breakdown-table { page-break-inside: avoid !important; }
+      /* Evitar que el título y la tabla se separen */
+      #t-proposal h3 { page-break-after: avoid !important; }
+
+      /* Tabla de inversión ajustada a la hoja */
+      .breakdown-table {
+        width: 100% !important;
+        font-size: 10px !important;
+        table-layout: fixed !important;
+      }
+      .breakdown-table th, .breakdown-table td {
+        padding: 6px 8px !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+      }
+      .breakdown-table th:first-child, .breakdown-table td:first-child { width: 20% !important; }
+      .breakdown-table th:nth-child(2), .breakdown-table td:nth-child(2) { width: 58% !important; }
+      .breakdown-table th:last-child, .breakdown-table td:last-child { width: 22% !important; white-space: normal !important; }
+      .td-concept strong { font-size: 10px !important; }
+      .concept-tag { display: none !important; }
+      .td-desc { font-size: 10px !important; }
+
+      /* ── HOJA 6: Condiciones Comerciales forzado al inicio ── */
+      #t-terms { page-break-before: always !important; }
+
+      /* Evitar cortes internos */
+      .terms-block, .includes-box, .stat-card { page-break-inside: avoid !important; }
+      .acc-item { page-break-inside: avoid !important; }
     }
     @media (max-width: 640px) {
       .cover-content { padding: 24px 24px; }
@@ -609,6 +697,15 @@
             <td style="font-weight:700;color:var(--success);text-align:right;">Incluido</td>
           </tr>
 
+          <tr>
+            <td class="td-concept">
+              <strong>Hora Extra de Desarrollo</strong>
+              <span class="concept-tag">Bajo demanda</span>
+            </td>
+            <td class="td-desc">Desarrollo de funcionalidades personalizadas fuera del alcance original del proyecto, solicitadas por Sigma durante o después de la implementación. Se factura contra reporte de horas aprobado por el cliente.</td>
+            <td style="font-weight:700;color:var(--navy);white-space:nowrap;text-align:right;">$100<br><span style="font-size:11px;font-weight:500;color:var(--text-muted);">por hora</span></td>
+          </tr>
+
           <!-- Separador visual -->
           <tr style="background:#f8fafc;">
             <td colspan="3" style="padding:8px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">Totales anualizados</td>
@@ -824,13 +921,11 @@ function showTab(id, btn) {
 // ── PRINT ─────────────────────────────────────────────────────────────
 window.addEventListener('beforeprint', function() {
   document.querySelectorAll('.acc-item').forEach(el => el.classList.add('open'));
-  document.querySelectorAll('.section-tab').forEach(el => el.style.display = 'block');
+  document.body.classList.add('is-printing');
 });
 window.addEventListener('afterprint', function() {
   document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
-  document.querySelectorAll('.section-tab').forEach(el => el.style.display = '');
-  const active = document.querySelector('.section-tab.active');
-  if (active) active.style.display = 'block';
+  document.body.classList.remove('is-printing');
 });
 
 // ── INIT: mostrar overlay si no hay sesión ────────────────────────────
